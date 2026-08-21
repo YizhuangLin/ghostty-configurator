@@ -1,0 +1,28 @@
+Ghostty Configurator — Third-Party Notices
+===========================================
+
+This project is an unofficial, community-built visual configurator for the
+Ghostty terminal. It is NOT affiliated with or endorsed by the Ghostty project.
+
+1. Dock icon artwork
+--------------------
+The nine macOS Dock icon previews (official, blueprint, chalkboard, glass,
+holographic, microchip, paper, retro, xray) are artwork owned by the Ghostty
+project (https://github.com/ghostty-org/ghostty). They are embedded here at a
+reduced resolution solely to let users preview Ghostty's built-in `macos-icon`
+options before choosing one. All rights to this artwork remain with the Ghostty
+project. If the Ghostty maintainers request removal, the images will be replaced
+with placeholders.
+
+2. Terminal color schemes
+-------------------------
+The 463 bundled color themes are the palettes shipped with Ghostty, which in
+turn largely derive from the iTerm2-Color-Schemes project
+(https://github.com/mbadolato/iTerm2-Color-Schemes), licensed under MIT.
+Only numeric color values are reproduced.
+
+3. Ghostty
+----------
+Ghostty (https://ghostty.org) is created by Mitchell Hashimoto and contributors,
+licensed under the MIT License. "Ghostty" and its logos are the property of the
+Ghostty project.
