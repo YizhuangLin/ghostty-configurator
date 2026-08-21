@@ -2,4 +2,22 @@
 User-agent: *
 Allow: /
 
+# AI answer/search engines explicitly welcomed (GEO/AEO)
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+
 Sitemap: https://ghostty.cestduleon.cc/sitemap.xml

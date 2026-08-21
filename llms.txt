@@ -1,0 +1,26 @@
+# Ghostty Configurator
+
+> A free, open-source visual configurator for the Ghostty terminal. Browse 463 built-in color themes, live-preview the terminal (transparency, blur, fonts, ligatures, cursor styles, macOS Dock icons and GLSL shaders), auto-switch light/dark with the system, and export a config file validated against `ghostty +validate-config`. For macOS and Linux.
+
+Ghostty Configurator is a single-page web app that runs entirely in the browser. It is an unofficial community project and is not affiliated with the Ghostty project.
+
+## Key facts
+- Price: Free, open source (MIT license). No account or signup.
+- Platforms: macOS, Linux.
+- Themes: 463 color schemes with a curated popularity ranking, live search, and dark/light filters.
+- Output: a ready-to-use Ghostty `config` file. Every generated option passes `ghostty +validate-config`.
+- Day/night: can emit `theme = light:<LightTheme>,dark:<DarkTheme>` to follow the system appearance automatically.
+- Config file location (macOS): `~/.config/ghostty/config` or `~/Library/Application Support/com.mitchellh.ghostty/config`.
+- Config file location (Linux): `~/.config/ghostty/config`.
+- Reload config in Ghostty: press Cmd+Shift+Comma on macOS, or Ctrl+Shift+Comma on Linux.
+
+## How to use
+1. Open https://ghostty.cestduleon.cc/
+2. Pick a theme and adjust appearance; watch the live preview.
+3. Click "下载 config" (Download) or "复制配置" (Copy).
+4. Save the file to your Ghostty config path and reload Ghostty.
+
+## Links
+- App: https://ghostty.cestduleon.cc/
+- Source code: https://github.com/YizhuangLin/ghostty-configurator
+- Ghostty terminal: https://ghostty.org
