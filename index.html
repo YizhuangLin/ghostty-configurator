@@ -3,7 +3,59 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ghostty 装修器 · 实时预览</title>
+<title>Ghostty Configurator — Themes & Live Config Generator</title>
+<meta name="description" content="Free visual configurator for the Ghostty terminal — browse 463 themes, preview fonts, cursors, transparency & shaders live, then export a ready-to-use config file. macOS & Linux.">
+<meta name="keywords" content="ghostty, ghostty config, ghostty configurator, ghostty themes, ghostty theme generator, terminal config, terminal theme, ghostty setup, macos terminal">
+<meta name="author" content="YizhuangLin">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="theme-color" content="#1a1b26">
+<link rel="canonical" href="https://ghostty.cestduleon.cc/">
+<link rel="alternate" hreflang="en" href="https://ghostty.cestduleon.cc/">
+<link rel="alternate" hreflang="zh" href="https://ghostty.cestduleon.cc/">
+<link rel="alternate" hreflang="x-default" href="https://ghostty.cestduleon.cc/">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ghostty Configurator">
+<meta property="og:title" content="Ghostty Configurator — Themes & Live Config Generator">
+<meta property="og:description" content="Browse 463 themes, preview fonts, cursors, transparency & shaders live, then export a ready-to-use Ghostty config file. Free & open source.">
+<meta property="og:url" content="https://ghostty.cestduleon.cc/">
+<meta property="og:image" content="https://ghostty.cestduleon.cc/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_CN">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ghostty Configurator — Themes & Live Config Generator">
+<meta name="twitter:description" content="Browse 463 themes, preview live, export a ready-to-use Ghostty config. Free & open source.">
+<meta name="twitter:image" content="https://ghostty.cestduleon.cc/og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E%F0%9F%91%BB%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Ghostty Configurator",
+  "url": "https://ghostty.cestduleon.cc/",
+  "description": "Free, open-source visual configurator for the Ghostty terminal. Browse 463 themes, live-preview appearance, and export a validated config file.",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "macOS, Linux",
+  "browserRequirements": "Requires JavaScript",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isAccessibleForFree": true,
+  "inLanguage": ["en", "zh"],
+  "softwareVersion": "1.0",
+  "license": "https://opensource.org/licenses/MIT",
+  "author": { "@type": "Person", "name": "YizhuangLin", "url": "https://github.com/YizhuangLin" },
+  "sameAs": ["https://github.com/YizhuangLin/ghostty-configurator"],
+  "featureList": [
+    "463 terminal color themes with popularity ranking and search",
+    "Live terminal preview of transparency, blur, fonts, cursor and shaders",
+    "Follow system day/night appearance",
+    "macOS Dock icon preview",
+    "One-click validated config export"
+  ]
+}
+</script>
 <style>
   :root{ --panel:#161821; --panel2:#1e2130; --line:#2a2e42; --txt:#e6e8f0; --dim:#8a90a8; --acc:#7aa2f7; }
   *{box-sizing:border-box}
@@ -107,8 +159,8 @@
 </head>
 <body>
 <div id="ctrl">
-  <h1><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c.9 0 1.5-.7 1.5-1.5 0-.4-.2-.7-.4-1-.3-.3-.5-.6-.5-1 0-.8.7-1.4 1.5-1.4H16a5 5 0 0 0 5-5c0-4.4-4-8-9-8z"/><circle cx="7.5" cy="10.5" r=".6"/><circle cx="12" cy="7.5" r=".6"/><circle cx="16.5" cy="10.5" r=".6"/></svg>Ghostty 装修器</h1>
-  <div class="sub">463 款主题 · 实时预览 · 一键导出</div>
+  <h1><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c.9 0 1.5-.7 1.5-1.5 0-.4-.2-.7-.4-1-.3-.3-.5-.6-.5-1 0-.8.7-1.4 1.5-1.4H16a5 5 0 0 0 5-5c0-4.4-4-8-9-8z"/><circle cx="7.5" cy="10.5" r=".6"/><circle cx="12" cy="7.5" r=".6"/><circle cx="16.5" cy="10.5" r=".6"/></svg>Ghostty Configurator</h1>
+  <div class="sub">装修器 · 463 款主题 · 实时预览 · 一键导出</div>
 
   <div class="group">
     <label class="hd">配色主题 <span id="tcount" style="color:var(--acc)"></span></label>
@@ -336,7 +388,15 @@ Windows %APPDATA%\ghostty\config</pre>
   <p>把 <code>.glsl</code> 文件放进 <code>~/.config/ghostty/shaders/</code>,配置里已用相对路径引用。着色器可从 Ghostty 社区着色器集合获取。校验器不检查文件是否存在,缺文件时特效会被静默跳过。</p>
   <h3>4 · 验证</h3>
   <p>命令行运行 <code>ghostty +validate-config</code> 可检查语法。本配置器生成的所有选项均已通过官方校验。</p>
-  <div style="margin-top:20px"><button class="btn" id="helpClose">明白了</button></div>
+  <h3>About · 关于</h3>
+  <p><strong>Ghostty Configurator</strong> is a free, open-source visual tool to configure the
+  <a href="https://ghostty.org" rel="noopener">Ghostty terminal</a>: browse 463 themes, live-preview
+  transparency, blur, fonts, cursor styles, macOS Dock icons and shaders, switch light/dark with the
+  system, and export a validated <code>config</code> file for macOS and Linux. Source and issues on
+  <a href="https://github.com/YizhuangLin/ghostty-configurator" rel="noopener">GitHub</a>.</p>
+  <p>一个免费开源的 Ghostty 终端可视化配置器:463 款主题、实时预览、跟随系统日夜、一键导出官方校验通过的配置文件。
+  非官方社区项目,与 Ghostty 无隶属关系。</p>
+  <div style="margin-top:20px"><button class="btn" id="helpClose">明白了 · Got it</button></div>
 </div>
 <div class="toast" id="toast"></div>
 <style id="dynsty"></style>

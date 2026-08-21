@@ -1,0 +1,5 @@
+# https://ghostty.cestduleon.cc/robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://ghostty.cestduleon.cc/sitemap.xml
