@@ -219,6 +219,7 @@
       <span class="chip" data-edit="light"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>浅色主题</span>
       <span class="chip on" data-edit="dark"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>深色主题</span>
     </div>
+    <div class="note" id="editModeNote" style="display:none;margin:-4px 0 8px"></div>
     <input type="text" id="search" placeholder="搜索主题名… (gruvbox / tokyo / nord)">
     <div class="chips" style="margin:8px 0">
       <span class="chip on" data-tone="hot">热门</span>
@@ -383,6 +384,7 @@
       <label class="tog" style="margin:0"><input type="checkbox" id="siSudo" checked> sudo</label>
       <label class="tog" style="margin:0"><input type="checkbox" id="siTitle" checked> title</label>
     </div>
+    <div class="note" id="siCursorNote" style="margin:4px 0 0"></div>
     <div class="note" style="margin:9px 0 5px">快捷键(逐条可关)</div>
     <label class="tog" style="margin:4px 0"><input type="checkbox" id="kbSplitLR" checked> 左右分屏 <small>⌘D</small></label>
     <label class="tog" style="margin:4px 0"><input type="checkbox" id="kbSplitUD" checked> 上下分屏 <small>⌘⇧D</small></label>
@@ -479,6 +481,8 @@ const state={theme:"Atom One Dark",autoTheme:false,editMode:"dark",themeLight:"A
   cmd:"",cwd:"",scrollMult:3,ffm:false,pasteProt:true,noScrollbar:false};
 
 const listEl=$("#themeList");
+const sysScheme=()=>(typeof window!=="undefined"&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light";
+function syncEditModeChips(){document.querySelectorAll("#editModeRow .chip").forEach(c=>c.classList.toggle("on",c.dataset.edit===state.editMode));}
 function activeTheme(){return state.autoTheme?(state.editMode==="light"?state.themeLight:state.themeDark):state.theme;}
 function setActiveTheme(n){if(state.autoTheme){if(state.editMode==="light")state.themeLight=n;else state.themeDark=n;}else state.theme=n;}
 function renderList(){
@@ -500,7 +504,7 @@ function renderList(){
   }).join("");
 }
 listEl.addEventListener("click",e=>{const it=e.target.closest(".titem");if(!it)return;setActiveTheme(it.dataset.n);renderList();render();});
-$("#autoTheme").addEventListener("change",e=>{state.autoTheme=e.target.checked;$("#editModeRow").style.display=e.target.checked?"flex":"none";if(e.target.checked){state.themeDark=state.theme;}renderList();render();});
+$("#autoTheme").addEventListener("change",e=>{state.autoTheme=e.target.checked;$("#editModeRow").style.display=e.target.checked?"flex":"none";if(e.target.checked){state.themeDark=state.theme;state.editMode=sysScheme();syncEditModeChips();}renderList();render();});
 document.querySelectorAll("#editModeRow .chip").forEach(c=>c.addEventListener("click",()=>{document.querySelectorAll("#editModeRow .chip").forEach(x=>x.classList.remove("on"));c.classList.add("on");state.editMode=c.dataset.edit;renderList();render();}));
 $("#search").addEventListener("input",e=>{state.q=e.target.value;renderList()});
 document.querySelectorAll("[data-tone]").forEach(c=>c.addEventListener("click",()=>{
@@ -609,6 +613,12 @@ function render(){
     C(P[8],"palette ")+[...Array(16)].map((_,i)=>`<span style="background:${P[i]};color:${lum(P[i])>0.5?'#000':'#fff'};padding:0 4px">${i}</span>`).join("")
   ].join("\n");
   $("#curName").textContent=(state.autoTheme?(state.editMode==="light"?"浅色 | ":"深色 | "):"")+"主题: "+activeTheme()+(state.autoTheme?"  (另一套: "+(state.editMode==="light"?state.themeDark:state.themeLight)+")":"");
+  const emn=$("#editModeNote");
+  if(state.autoTheme){const sys=sysScheme();emn.style.display="block";
+    emn.textContent=sys===state.editMode?`你的 Mac 现在是${sys==="dark"?"深":"浅"}色模式,Ghostty 此刻显示的就是这一套。`:`注意:你的 Mac 现在是${sys==="dark"?"深":"浅"}色模式,Ghostty 此刻显示的是另一套(${sys==="dark"?state.themeDark:state.themeLight}),这里只是在编辑${state.editMode==="dark"?"深":"浅"}色那套。`;}
+  else emn.style.display="none";
+  const cursorClash=state.siCursor&&(state.cur!=="bar"||!state.blink);
+  $("#siCursorNote").textContent=cursorClash?"cursor 功能会在提示符处把光标强制改成闪烁竖线,覆盖你选的光标样式。已自动导出 no-cursor,让你的光标设置生效。":"cursor:提示符处显示闪烁竖线;sudo:sudo 保留终端信息;title:标题栏跟随目录。";
   buildCfg();
 }
 
@@ -687,7 +697,9 @@ function buildCfg(){
   if(state.copySel)L.push("copy-on-select = clipboard");
   if(state.noScrollbar)L.push("scrollbar = never");
   if(state.scroll!==10)L.push("scrollback-limit = "+(state.scroll*1000000));
-  const si=[];if(state.siCursor)si.push("cursor");if(state.siSudo)si.push("sudo");if(state.siTitle)si.push("title");
+  const si=[];const cursorClash=state.siCursor&&(state.cur!=="bar"||!state.blink);
+  if(state.siCursor)si.push(cursorClash?"no-cursor":"cursor");if(state.siSudo)si.push("sudo");if(state.siTitle)si.push("title");
+  if(cursorClash)L.push("# shell 集成的 cursor 功能会在提示符处强制显示闪烁竖线,这里关掉它,让上面的 cursor-style 生效");
   if(si.length)L.push("shell-integration-features = "+si.join(","));
   if(state.inheritCwd)L.push("window-inherit-working-directory = true");
   if(state.saveState)L.push("window-save-state = always");
@@ -749,7 +761,9 @@ function applyStateToUI(){
   if(!(state.themeDark in THEMES))state.themeDark="Atom One Dark";
   if(!(state.themeLight in THEMES))state.themeLight="Atom One Light";
   if(!(+state.scroll>=1))state.scroll=10; // 旧版本曾允许 0
+  if(state.autoTheme)state.editMode=sysScheme(); // 预览默认展示 Ghostty 此刻真正使用的那一套
 })();
+if(typeof window!=="undefined"&&window.matchMedia){window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{if(!state.autoTheme)return;state.editMode=sysScheme();syncEditModeChips();renderList();render();});}
 applyStateToUI();
 
 $("#resetBtn").onclick=()=>{localStorage.removeItem("ghostty-decor");location.reload();};
